@@ -64,6 +64,7 @@
   </div>
 </template>
 <script setup>
+const runtimeConfig = useRuntimeConfig()
   useHead({
     title: 'Movies Info - App',
     meta: [
@@ -79,10 +80,11 @@
           },
         ]
   });
+  
   const searchInput = ref('')
   const searchedMovies = ref([])
   const pendingState = ref(null)
-  const {data: movies, pending} = await useFetch('https://api.themoviedb.org/3/movie/now_playing?api_key=d0ac7b4e726e018d6d6e18aa6e12955b&language=en-US&page=1')
+  const {data: movies, pending} = await useFetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${runtimeConfig.apiSecret}&language=en-US&page=1`)
 
   function clearSearch(){
     searchInput.value =''
@@ -90,7 +92,7 @@
   }
 
   async function onSearch() {
-    const {data: movies, pending} = await useFetch(`https://api.themoviedb.org/3/search/movie?api_key=d0ac7b4e726e018d6d6e18aa6e12955b&language=en-US&page=1&query=${searchInput.value}`)
+    const {data: movies, pending} = await useFetch(`https://api.themoviedb.org/3/search/movie?api_key=${runtimeConfig.apiSecret}&language=en-US&page=1&query=${searchInput.value}`)
     searchedMovies.value = toRaw(movies.value).results
     pendingState.value = true
   }

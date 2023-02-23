@@ -5,4 +5,10 @@ export default defineNuxtConfig({
     app: {
         pageTransition: { name: 'page', mode: 'out-in' }
     },
+    runtimeConfig: {
+        public:{
+            apiSecret: process.env.MOVIES_API_KEY
+        }
+        
+    },
 })

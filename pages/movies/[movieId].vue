@@ -46,6 +46,7 @@
 </template>
 
 <script setup>
+const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const movie = ref('')
 const pendingState = ref(true)
@@ -54,7 +55,8 @@ useHead({
     title: movie.value.title,
   });
 
-const {data, pending} = await useFetch(`https://api.themoviedb.org/3/movie/${route.params.movieId}?api_key=d0ac7b4e726e018d6d6e18aa6e12955b&language=en-US`)
+const {data, pending} = await useFetch(`https://api.themoviedb.org/3/movie/${route.params.movieId}?api_key=${runtimeConfig.apiSecret}&language=en-US`)
+
 movie.value = data.value
 setTimeout(()=>{
     pendingState.value = false
